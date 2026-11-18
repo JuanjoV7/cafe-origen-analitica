@@ -35,8 +35,24 @@ console.log(`totalVendido: ${analitica.totalVendido(ventas) === analitica.totalV
 console.log(`unidadesVendidas: ${analitica.unidadesVendidas(ventas) === analitica.unidadesVendidasM(ventas) ? "OK" : "DIFERENTE"}`);
 console.log(`ventasPorCiudad: ${analitica.ventasPorCiudad(ventas, "Medellín") === analitica.ventasPorCiudadM(ventas, "Medellín") ? "OK" : "DIFERENTE"}`);
 
-// MiniReto 3: agrupaciones y ranking
+
 console.log(analitica.totalPorCiudad(ventas));            // 4 ciudades
 console.log(analitica.unidadesPorProducto(ventas));       // unidades por producto
 console.log(analitica.topProductosPorValor(ventas, 3));   // 3 productos, de mayor a menor
 console.log(ventas.map(v => v.id));                       // [1, 2, ..., 12]: orden original
+
+
+const conEspacio = [ventas[1], { ...ventas[5], ciudad: "Bogotá " }];
+console.log(conEspacio.map(v => `[${v.ciudad}]`));      
+const sinNormalizar = conEspacio.reduce((acc, v) => {
+  acc[v.ciudad] = (acc[v.ciudad] || 0) + analitica.valorVenta(v);
+  return acc;
+}, {});
+console.log(sinNormalizar);                             // Bogotá dos veces
+console.log(analitica.totalPorCiudad(conEspacio));      // un solo grupo: bogotá 78000
+
+
+const diaSinVentas = analitica.ventasDelDia(ventas, "2026-09-07");
+console.log(diaSinVentas.length);                                          // 0
+console.log(analitica.totalVendido(diaSinVentas) / diaSinVentas.length);  // NaN
+console.log(analitica.ticketPromedio(diaSinVentas));                      // 0
