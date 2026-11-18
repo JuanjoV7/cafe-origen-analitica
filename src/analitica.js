@@ -52,6 +52,47 @@ function ventasPorCiudad(ventas, ciudad) {
   return total;
 }
 
+function totalVendidoM(ventas) {
+  return ventas.reduce((acum, v) => acum + valorVenta(v), 0);
+}
+
+function unidadesVendidasM(ventas) {
+  return ventas.reduce((acum, v) => acum + v.cantidad, 0);
+}
+
+function ventasPorCiudadM(ventas, ciudad) {
+  return ventas
+    .filter(v => normalizar(v.ciudad) === normalizar(ciudad))
+    .reduce((suma, v) => suma + valorVenta(v), 0);
+}
+
+function totalPorCiudad(ventas) {
+  return ventas.reduce((acc, v) => {
+    const ciudad = normalizar(v.ciudad);
+    acc[ciudad] = (acc[ciudad] || 0) + valorVenta(v);
+    return acc;
+  }, {});
+}
+
+function unidadesPorProducto(ventas) {
+  return ventas.reduce((acc, v) => {
+    acc[v.producto] = (acc[v.producto] || 0) + v.cantidad;
+    return acc;
+  }, {});
+}
+
+function topProductosPorValor(ventas, k) {
+  const porProducto = ventas.reduce((acc, v) => {
+    acc[v.producto] = (acc[v.producto] || 0) + valorVenta(v);
+    return acc;
+  }, {});
+  const pares = Object.entries(porProducto);
+  return [...pares]                    
+    .sort((a, b) => b[1] - a[1])      
+    .slice(0, k)
+    .map(par => par[0]);
+}
+
 module.exports = {
   valorVenta: valorVenta,
   totalVendido: totalVendido,
@@ -59,4 +100,10 @@ module.exports = {
   ventaMayor: ventaMayor,
   ticketPromedio: ticketPromedio,
   ventasPorCiudad: ventasPorCiudad,
+  totalVendidoM: totalVendidoM,
+  unidadesVendidasM: unidadesVendidasM,
+  ventasPorCiudadM: ventasPorCiudadM,
+  totalPorCiudad: totalPorCiudad,
+  unidadesPorProducto: unidadesPorProducto,
+  topProductosPorValor: topProductosPorValor
 };

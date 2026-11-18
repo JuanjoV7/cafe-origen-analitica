@@ -29,3 +29,14 @@ console.log(analitica.ticketPromedio([]));                         // 0
 console.log(analitica.ventasPorCiudad(ventas, "Medellín"));        // 356000
 console.log(analitica.ventasPorCiudad([ventas[0]], "Medellín"));   // 84000
 console.log(analitica.ventasPorCiudad([], "Medellín"));            // 0
+
+
+console.log(`totalVendido: ${analitica.totalVendido(ventas) === analitica.totalVendidoM(ventas) ? "OK" : "DIFERENTE"}`);
+console.log(`unidadesVendidas: ${analitica.unidadesVendidas(ventas) === analitica.unidadesVendidasM(ventas) ? "OK" : "DIFERENTE"}`);
+console.log(`ventasPorCiudad: ${analitica.ventasPorCiudad(ventas, "Medellín") === analitica.ventasPorCiudadM(ventas, "Medellín") ? "OK" : "DIFERENTE"}`);
+
+// MiniReto 3: agrupaciones y ranking
+console.log(analitica.totalPorCiudad(ventas));            // 4 ciudades
+console.log(analitica.unidadesPorProducto(ventas));       // unidades por producto
+console.log(analitica.topProductosPorValor(ventas, 3));   // 3 productos, de mayor a menor
+console.log(ventas.map(v => v.id));                       // [1, 2, ..., 12]: orden original
