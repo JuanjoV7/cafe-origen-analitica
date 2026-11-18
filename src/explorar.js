@@ -1,5 +1,6 @@
 
 const ventas = require("./datos");
+
 console.log("Registros:", ventas.length);
 console.log("Primero:", ventas[0]);
 console.log("Último:", ventas[ventas.length - 1]);
