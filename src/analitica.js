@@ -42,7 +42,9 @@ function ticketPromedio(ventas) {
   return total / validas;
 }
 
-const normalizar = (texto) => texto.trim().toLowerCase();
+function normalizar(texto) {
+    return texto.trim().toLowerCase();
+}
 
 function ventasPorCiudad(ventas, ciudad) {
   let total = 0;
@@ -96,6 +98,16 @@ function topProductosPorValor(ventas, k) {
 function ventasDelDia(ventas, fecha) {
   return ventas.filter(v => v.fecha === fecha);
 }
+
+function totalVendidoI(ventas, contador) {
+    let total = 0;
+    for (const v of ventas) {
+        contador.operaciones += 1;
+        total += valorVenta(v); 
+    }
+    return total;
+}
+
 
 module.exports = {
   valorVenta: valorVenta,
