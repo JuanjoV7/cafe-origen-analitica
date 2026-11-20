@@ -1,5 +1,6 @@
 const ventas = require("./datos");
 const analitica = require("./analitica");
+const generador = require("./generador");
 
 
 console.log(analitica.valorVenta(ventas[0]));                      // 84000
@@ -60,3 +61,11 @@ console.log(analitica.ticketPromedio(diaSinVentas));                      // 0
 
 console.log(analitica.clientesRecurrentes(ventas));                 // ["C01", "C02", "C03"]
 console.log(analitica.clientesRecurrentes(ventas.slice(0, 5)));     // ["C01"] (traza de 5 ventas)
+
+
+const ventasGeneradas = generador.generarVentas(10000);
+for (const ciudad of ["Medellín", "Bogotá", "Cali", "Pereira"]) {
+  const cadena = analitica.totalCiudadCadena(ventasGeneradas, ciudad);
+  const unaPasada = analitica.totalCiudadUnaPasada(ventasGeneradas, ciudad);
+  console.log(`${ciudad}: ${cadena} / ${unaPasada} → ${cadena === unaPasada ? "OK" : "DIFERENTE"}`);
+}

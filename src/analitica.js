@@ -150,6 +150,23 @@ function clientesRecurrentes(ventas) {
   return recurrentes;
 }
 
+function totalCiudadCadena(ventas, ciudad) {
+  return ventas
+    .map(v => ({ ...v, ciudad: normalizar(v.ciudad) }))
+    .filter(v => v.ciudad === normalizar(ciudad))
+    .map(v => valorVenta(v))
+    .reduce((suma, valor) => suma + valor, 0);
+}
+
+function totalCiudadUnaPasada(ventas, ciudad) {
+  let total = 0;
+  for (const v of ventas) {
+    if (normalizar(v.ciudad) === normalizar(ciudad)) total += valorVenta(v);
+  }
+  return total;
+}
+
+
 module.exports = {
   valorVenta: valorVenta,
   totalVendido: totalVendido,
@@ -168,6 +185,8 @@ module.exports = {
   ventaMayorI: ventaMayorI,
   totalPorCiudadI: totalPorCiudadI,
   primeraVenta: primeraVenta,
-  clientesRecurrentes: clientesRecurrentes
+  clientesRecurrentes: clientesRecurrentes,
+  totalCiudadCadena: totalCiudadCadena,
+  totalCiudadUnaPasada: totalCiudadUnaPasada
 };
 
