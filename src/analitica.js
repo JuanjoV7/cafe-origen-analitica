@@ -108,6 +108,34 @@ function totalVendidoI(ventas, contador) {
     return total;
 }
 
+function ventaMayorI(ventas, contador) {
+  contador.operaciones += 1;                 
+  if (ventas.length === 0) return null;
+  let mayor = ventas[0];
+  for (const v of ventas) {
+    contador.operaciones += 1;               
+    contador.operaciones += 1;              
+    if (valorVenta(v) > valorVenta(mayor)) {
+      mayor = v;
+    }
+  }
+  return mayor;
+
+}
+
+  function totalPorCiudadI(ventas, contador) {
+  return ventas.reduce((acc, v) => {
+    contador.operaciones += 1;              
+    const ciudad = normalizar(v.ciudad);
+    acc[ciudad] = (acc[ciudad] || 0) + valorVenta(v);
+    return acc;
+  }, {});
+}
+
+function primeraVenta(ventas, contador) {
+  contador.operaciones += 1;                 
+  return ventas[0];
+}
 
 module.exports = {
   valorVenta: valorVenta,
@@ -122,5 +150,10 @@ module.exports = {
   totalPorCiudad: totalPorCiudad,
   unidadesPorProducto: unidadesPorProducto,
   topProductosPorValor: topProductosPorValor,
-  ventasDelDia: ventasDelDia
+  ventasDelDia: ventasDelDia,
+  totalVendidoI: totalVendidoI,
+  ventaMayorI: ventaMayorI,
+  totalPorCiudadI: totalPorCiudadI,
+  primeraVenta: primeraVenta
 };
+
