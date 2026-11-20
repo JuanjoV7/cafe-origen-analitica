@@ -28,3 +28,11 @@ for (const n of [100, 1000, 10000, 100000]) {
 }
 
 console.table(filas);
+
+
+for (const n of [1000, 2000, 4000, 8000, 16000]) {
+  const ventas = generador.generarVentas(n);
+  console.time(`clientesRecurrentes n = ${n}`);
+  analitica.clientesRecurrentes(ventas);
+  console.timeEnd(`clientesRecurrentes n = ${n}`);
+}

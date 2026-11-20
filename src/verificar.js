@@ -56,3 +56,7 @@ const diaSinVentas = analitica.ventasDelDia(ventas, "2026-09-07");
 console.log(diaSinVentas.length);                                          // 0
 console.log(analitica.totalVendido(diaSinVentas) / diaSinVentas.length);  // NaN
 console.log(analitica.ticketPromedio(diaSinVentas));                      // 0
+
+
+console.log(analitica.clientesRecurrentes(ventas));                 // ["C01", "C02", "C03"]
+console.log(analitica.clientesRecurrentes(ventas.slice(0, 5)));     // ["C01"] (traza de 5 ventas)
