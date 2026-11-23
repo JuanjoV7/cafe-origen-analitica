@@ -43,7 +43,7 @@ function ticketPromedio(ventas) {
 }
 
 function normalizar(texto) {
-    return texto.trim().toLowerCase();
+  return texto.trim().toLowerCase();
 }
 
 function ventasPorCiudad(ventas, ciudad) {
@@ -89,8 +89,8 @@ function topProductosPorValor(ventas, k) {
     return acc;
   }, {});
   const pares = Object.entries(porProducto);
-  return [...pares]                    
-    .sort((a, b) => b[1] - a[1])      
+  return [...pares]
+    .sort((a, b) => b[1] - a[1])
     .slice(0, k)
     .map(par => par[0]);
 }
@@ -100,21 +100,21 @@ function ventasDelDia(ventas, fecha) {
 }
 
 function totalVendidoI(ventas, contador) {
-    let total = 0;
-    for (const v of ventas) {
-        contador.operaciones += 1;
-        total += valorVenta(v); 
-    }
-    return total;
+  let total = 0;
+  for (const v of ventas) {
+    contador.operaciones += 1;
+    total += valorVenta(v);
+  }
+  return total;
 }
 
 function ventaMayorI(ventas, contador) {
-  contador.operaciones += 1;                 
+  contador.operaciones += 1;
   if (ventas.length === 0) return null;
   let mayor = ventas[0];
   for (const v of ventas) {
-    contador.operaciones += 1;               
-    contador.operaciones += 1;              
+    contador.operaciones += 1;
+    contador.operaciones += 1;
     if (valorVenta(v) > valorVenta(mayor)) {
       mayor = v;
     }
@@ -123,9 +123,9 @@ function ventaMayorI(ventas, contador) {
 
 }
 
-  function totalPorCiudadI(ventas, contador) {
+function totalPorCiudadI(ventas, contador) {
   return ventas.reduce((acc, v) => {
-    contador.operaciones += 1;              
+    contador.operaciones += 1;
     const ciudad = normalizar(v.ciudad);
     acc[ciudad] = (acc[ciudad] || 0) + valorVenta(v);
     return acc;
@@ -133,7 +133,7 @@ function ventaMayorI(ventas, contador) {
 }
 
 function primeraVenta(ventas, contador) {
-  contador.operaciones += 1;                 
+  contador.operaciones += 1;
   return ventas[0];
 }
 
@@ -142,7 +142,7 @@ function clientesRecurrentes(ventas) {
   for (let i = 0; i < ventas.length; i++) {
     for (let j = i + 1; j < ventas.length; j++) {
       if (ventas[i].cliente === ventas[j].cliente &&
-          !recurrentes.includes(ventas[i].cliente)) {
+        !recurrentes.includes(ventas[i].cliente)) {
         recurrentes.push(ventas[i].cliente);
       }
     }
@@ -166,6 +166,40 @@ function totalCiudadUnaPasada(ventas, ciudad) {
   return total;
 }
 
+function clientesRecurrentesSet(ventas) {
+  const vistos = new Set();
+  const recurrentes = new Set();
+  for (const v of ventas) {
+    if (vistos.has(v.cliente)) {
+      recurrentes.add(v.cliente);
+    } else {
+      vistos.add(v.cliente);
+    }
+  }
+  return [...recurrentes];
+
+}
+
+function comprasPorCliente(ventas) {
+  const compras = new Map();
+  for (const v of ventas) {
+    if (compras.has(v.cliente)) {
+      compras.set(v.cliente, compras.get(v.cliente) + 1);
+    } else {
+      compras.set(v.cliente, 1);
+    }
+  }
+  return compras;
+}
+
+function clientesRecurrentesMap(ventas) {
+  const compras = comprasPorCliente(ventas);
+  const recurrentes = [];
+  for (const par of compras) {
+    if (par[1] > 1) recurrentes.push(par[0]);
+  }
+  return recurrentes;
+}
 
 module.exports = {
   valorVenta: valorVenta,
@@ -187,6 +221,9 @@ module.exports = {
   primeraVenta: primeraVenta,
   clientesRecurrentes: clientesRecurrentes,
   totalCiudadCadena: totalCiudadCadena,
-  totalCiudadUnaPasada: totalCiudadUnaPasada
+  totalCiudadUnaPasada: totalCiudadUnaPasada,
+  clientesRecurrentesSet: clientesRecurrentesSet,
+  comprasPorCliente: comprasPorCliente,
+  clientesRecurrentesMap: clientesRecurrentesMap
 };
 

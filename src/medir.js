@@ -103,3 +103,22 @@ console.timeEnd("totalCiudadCadena");
 console.time("totalCiudadUnaPasada");
 analitica.totalCiudadUnaPasada(ventasPrueba, "Medellín");
 console.timeEnd("totalCiudadUnaPasada");
+
+
+for (const n of [1000, 10000, 100000]) {
+  const ventas = generador.generarVentas(n);
+
+  if (n <= 10000) {
+    console.time(`original n = ${n}`);
+    analitica.clientesRecurrentes(ventas);
+    console.timeEnd(`original n = ${n}`);
+  }
+
+  console.time(`Set n = ${n}`);
+  analitica.clientesRecurrentesSet(ventas);
+  console.timeEnd(`Set n = ${n}`);
+
+  console.time(`Map n = ${n}`);
+  analitica.clientesRecurrentesMap(ventas);
+  console.timeEnd(`Map n = ${n}`);
+}

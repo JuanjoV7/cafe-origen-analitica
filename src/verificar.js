@@ -69,3 +69,23 @@ for (const ciudad of ["Medellín", "Bogotá", "Cali", "Pereira"]) {
   const unaPasada = analitica.totalCiudadUnaPasada(ventasGeneradas, ciudad);
   console.log(`${ciudad}: ${cadena} / ${unaPasada} → ${cadena === unaPasada ? "OK" : "DIFERENTE"}`);
 }
+
+
+const clientesDistintos = new Set();
+for (const v of ventas) {
+  clientesDistintos.add(v.cliente);
+}
+console.log(clientesDistintos.size);                         // 8
+
+
+console.log(analitica.clientesRecurrentesSet(ventas));       // ["C01", "C02", "C03"]
+console.log(analitica.comprasPorCliente(ventas));            // Map: C01 => 3, C02 => 2, C03 => 2, ...
+console.log(analitica.clientesRecurrentesMap(ventas));       // ["C01", "C02", "C03"]
+
+
+for (const prueba of [ventas, generador.generarVentas(5000)]) {
+  const original = analitica.clientesRecurrentes(prueba).sort().join(",");
+  const conSet = analitica.clientesRecurrentesSet(prueba).sort().join(",");
+  const conMap = analitica.clientesRecurrentesMap(prueba).sort().join(",");
+  console.log(`${prueba.length} ventas: ${original === conSet && conSet === conMap ? "OK" : "DIFERENTE"}`);
+} 
