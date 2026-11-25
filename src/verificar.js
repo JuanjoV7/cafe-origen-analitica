@@ -2,6 +2,7 @@ const ventas = require("./datos");
 const analitica = require("./analitica");
 const generador = require("./generador");
 const catalogo = require("./catalogo");
+const ventasDiarias = require("./ventasDiarias");
 
 
 console.log(analitica.valorVenta(ventas[0]));                      // 84000
@@ -104,3 +105,17 @@ console.log(analitica.productoEstrellaPorCiudad(ventas));  // medellín, bogotá
 console.log(analitica.productoEstrellaPorCiudad([]));      // Map vacío
 console.log(analitica.primerClienteUnico(ventas));         // "C04"
 console.log(analitica.primerClienteUnico([]));             // null
+
+
+console.log(analitica.mejorSemanaBruta(ventasDiarias, 7));    // { total: 3670, diaInicio: 24 }
+console.log(analitica.mejorSemana(ventasDiarias, 7));         // { total: 3670, diaInicio: 24 }
+console.log(analitica.mejorSemana(ventasDiarias, 31));        // null 
+const diasGenerados = generador.generarDias(100000);
+const bruta = analitica.mejorSemanaBruta(diasGenerados, 7);
+const deslizante = analitica.mejorSemana(diasGenerados, 7);
+console.log(`100000 días: ${bruta.total === deslizante.total && bruta.diaInicio === deslizante.diaInicio ? "OK" : "DIFERENTE"}`);
+
+console.log(analitica.parMasCercano(catalogo, 100000));       // Filtros x100 + Huila 1 kg = 97000
+console.log(analitica.parMasCercano(catalogo, 140000));       // Sierra 500 g + Prensa = 140000
+console.log(analitica.parMasCercano(catalogo, 40000));        // null 
+console.log(catalogo[0].producto);                            // "Origen Nariño 250 g"

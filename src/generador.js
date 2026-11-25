@@ -27,6 +27,15 @@ function generarVentas(n) {
     return ventas;
 }
 
+function generarDias(n) {
+    const dias = [];
+    for (let i = 0; i < n; i++) {
+        dias.push(azar(200, 800));
+    }
+    return dias;
+}
+
 module.exports = {
-    generarVentas: generarVentas
+    generarVentas: generarVentas,
+    generarDias: generarDias
 };

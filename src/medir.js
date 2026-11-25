@@ -122,3 +122,15 @@ for (const n of [1000, 10000, 100000]) {
   analitica.clientesRecurrentesMap(ventas);
   console.timeEnd(`Map n = ${n}`);
 }
+
+
+const diasPrueba = generador.generarDias(100000);
+
+console.time("mejorSemanaBruta 100000 días");
+analitica.mejorSemanaBruta(diasPrueba, 7);
+console.timeEnd("mejorSemanaBruta 100000 días");
+
+console.time("mejorSemana 100000 días");
+analitica.mejorSemana(diasPrueba, 7);
+console.timeEnd("mejorSemana 100000 días");
+

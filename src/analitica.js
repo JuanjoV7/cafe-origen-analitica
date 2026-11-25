@@ -262,6 +262,59 @@ function primerClienteUnico(ventas) {
   return null;
 }
 
+function mejorSemanaBruta(dias, k) {
+  if (k > dias.length) return null;
+  let mejor = null;
+  for (let inicio = 0; inicio <= dias.length - k; inicio++) {
+    let total = 0;
+    for (let i = inicio; i < inicio + k; i++) {
+      total += dias[i];
+    }
+    if (mejor === null || total > mejor.total) {
+      mejor = { total: total, diaInicio: inicio + 1 };
+    }
+  }
+  return mejor;
+}
+
+function mejorSemana(dias, k) {
+  if (k > dias.length) return null;
+  let total = 0;
+  for (let i = 0; i < k; i++) {
+    total += dias[i];
+  }
+  let mejor = { total: total, diaInicio: 1 };
+  for (let i = k; i < dias.length; i++) {
+    total += dias[i] - dias[i - k];
+    if (total > mejor.total) {
+      mejor = { total: total, diaInicio: i - k + 2 };
+    }
+  }
+  return mejor;
+}
+
+function parMasCercano(precios, presupuesto) {
+  const ordenados = [...precios].sort((a, b) => a.precio - b.precio);
+  let izquierda = 0;
+  let derecha = ordenados.length - 1;
+  let mejor = null;
+  let mejorSuma = 0;
+  while (izquierda < derecha) {
+    const suma = ordenados[izquierda].precio + ordenados[derecha].precio;
+    if (suma > presupuesto) {
+      derecha -= 1;
+    } else {
+      if (suma > mejorSuma) {
+        mejor = [ordenados[izquierda], ordenados[derecha]];
+        mejorSuma = suma;
+      }
+      izquierda += 1;
+    }
+  }
+  return mejor;
+}
+
+
 module.exports = {
   valorVenta: valorVenta,
   totalVendido: totalVendido,
@@ -287,6 +340,10 @@ module.exports = {
   comprasPorCliente: comprasPorCliente,
   clientesRecurrentesMap: clientesRecurrentesMap,
   comboRegalo: comboRegalo,
-  comboRegaloMap: comboRegaloMap
+  comboRegaloMap: comboRegaloMap,
+  primerClienteUnico: primerClienteUnico,
+  mejorSemanaBruta: mejorSemanaBruta,
+  mejorSemana: mejorSemana,
+  parMasCercano: parMasCercano
 };
 
