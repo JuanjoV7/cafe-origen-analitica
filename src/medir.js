@@ -1,5 +1,7 @@
 const generador = require("./generador");
 const analitica = require("./analitica");
+const catalogo = require("./catalogo");
+const ventasDiarias = require("./ventasDiarias");
 
 const filas = [];
 
@@ -134,3 +136,33 @@ console.time("mejorSemana 100000 días");
 analitica.mejorSemana(diasPrueba, 7);
 console.timeEnd("mejorSemana 100000 días");
 
+
+for (const n of [10000, 100000]) {
+  const ventas = generador.generarVentas(n);
+
+  console.time(`análisis v0.1 n = ${n}`);
+  analitica.totalVendido(ventas);
+  analitica.unidadesVendidas(ventas);
+  analitica.ventaMayor(ventas);
+  analitica.ticketPromedio(ventas);
+  analitica.totalPorCiudad(ventas);
+  analitica.unidadesPorProducto(ventas);
+  analitica.topProductosPorValor(ventas, 3);
+  analitica.clientesRecurrentes(ventas);
+  console.timeEnd(`análisis v0.1 n = ${n}`);
+
+  console.time(`análisis v1.0 n = ${n}`);
+  analitica.totalVendido(ventas);
+  analitica.unidadesVendidas(ventas);
+  analitica.ventaMayor(ventas);
+  analitica.ticketPromedio(ventas);
+  analitica.totalPorCiudad(ventas);
+  analitica.unidadesPorProducto(ventas);
+  analitica.topProductosPorValor(ventas, 3);
+  analitica.clientesRecurrentesSet(ventas);
+  analitica.productoEstrellaPorCiudad(ventas);
+  analitica.comboRegaloMap(catalogo, 87000);
+  analitica.primerClienteUnico(ventas);
+  analitica.mejorSemana(ventasDiarias, 7);
+  console.timeEnd(`análisis v1.0 n = ${n}`);
+}

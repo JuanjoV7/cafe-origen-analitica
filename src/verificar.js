@@ -115,6 +115,7 @@ const bruta = analitica.mejorSemanaBruta(diasGenerados, 7);
 const deslizante = analitica.mejorSemana(diasGenerados, 7);
 console.log(`100000 días: ${bruta.total === deslizante.total && bruta.diaInicio === deslizante.diaInicio ? "OK" : "DIFERENTE"}`);
 
+
 console.log(analitica.parMasCercano(catalogo, 100000));       // Filtros x100 + Huila 1 kg = 97000
 console.log(analitica.parMasCercano(catalogo, 140000));       // Sierra 500 g + Prensa = 140000
 console.log(analitica.parMasCercano(catalogo, 40000));        // null 
