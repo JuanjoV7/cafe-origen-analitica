@@ -1,6 +1,7 @@
 const ventas = require("./datos");
 const analitica = require("./analitica");
 const generador = require("./generador");
+const catalogo = require("./catalogo");
 
 
 console.log(analitica.valorVenta(ventas[0]));                      // 84000
@@ -89,3 +90,17 @@ for (const prueba of [ventas, generador.generarVentas(5000)]) {
   const conMap = analitica.clientesRecurrentesMap(prueba).sort().join(",");
   console.log(`${prueba.length} ventas: ${original === conSet && conSet === conMap ? "OK" : "DIFERENTE"}`);
 } 
+
+
+console.log(analitica.comboRegalo(catalogo, 87000));       // Huila 500 g + Sierra 500 g
+console.log(analitica.comboRegaloMap(catalogo, 87000));    // Huila 500 g + Sierra 500 g
+console.log(analitica.comboRegalo(catalogo, 61000));       // Nariño 250 g + Taza de cerámica
+console.log(analitica.comboRegaloMap(catalogo, 61000));    // Nariño 250 g + Taza de cerámica
+console.log(analitica.comboRegalo(catalogo, 84000));       // null 
+console.log(analitica.comboRegaloMap(catalogo, 84000));    // null
+console.log(analitica.comboRegaloMap([], 87000));          // null 
+
+console.log(analitica.productoEstrellaPorCiudad(ventas));  // medellín, bogotá, cali, pereira
+console.log(analitica.productoEstrellaPorCiudad([]));      // Map vacío
+console.log(analitica.primerClienteUnico(ventas));         // "C04"
+console.log(analitica.primerClienteUnico([]));             // null

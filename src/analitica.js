@@ -201,6 +201,67 @@ function clientesRecurrentesMap(ventas) {
   return recurrentes;
 }
 
+function comboRegalo(catalogo, valor) {
+  for (let i = 0; i < catalogo.length; i++) {
+    for (let j = i + 1; j < catalogo.length; j++) {
+      if (catalogo[i].precio + catalogo[j].precio === valor) {
+        return [catalogo[i], catalogo[j]];
+      }
+    }
+  }
+  return null;
+}
+
+function comboRegaloMap(catalogo, valor) {
+  const vistos = new Map();
+  for (const p of catalogo) {
+    const complemento = valor - p.precio;
+    if (vistos.has(complemento)) {
+      return [vistos.get(complemento), p];
+    }
+    vistos.set(p.precio, p);
+  }
+  return null;
+}
+
+function productoEstrellaPorCiudad(ventas) {
+  const conteos = new Map();
+  for (const v of ventas) {
+    const ciudad = normalizar(v.ciudad);
+    if (!conteos.has(ciudad)) {
+      conteos.set(ciudad, new Map());
+    }
+    const productos = conteos.get(ciudad);
+    if (productos.has(v.producto)) {
+      productos.set(v.producto, productos.get(v.producto) + 1);
+    } else {
+      productos.set(v.producto, 1);
+    }
+  }
+
+  const estrellas = new Map();
+  for (const parCiudad of conteos) {
+    let estrella = null;
+    let maximo = 0;
+    for (const parProducto of parCiudad[1]) {
+      if (parProducto[1] > maximo) {
+        estrella = parProducto[0];
+        maximo = parProducto[1];
+      }
+    }
+    estrellas.set(parCiudad[0], estrella);
+  }
+  return estrellas;
+}
+
+function primerClienteUnico(ventas) {
+  const compras = comprasPorCliente(ventas);
+  for (const v of ventas) {
+    if (compras.get(v.cliente) === 1) return v.cliente;
+  }
+  return null;
+}
+
 module.exports = {
   valorVenta: valorVenta,
   totalVendido: totalVendido,
@@ -224,6 +285,8 @@ module.exports = {
   totalCiudadUnaPasada: totalCiudadUnaPasada,
   clientesRecurrentesSet: clientesRecurrentesSet,
   comprasPorCliente: comprasPorCliente,
-  clientesRecurrentesMap: clientesRecurrentesMap
+  clientesRecurrentesMap: clientesRecurrentesMap,
+  comboRegalo: comboRegalo,
+  comboRegaloMap: comboRegaloMap
 };
 
